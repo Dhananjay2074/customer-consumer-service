@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appender name="STDOUT"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>[%-5level] %d{dd-MM-yyyy hh:mm:ss.SSS a} [%thread]
+				%logger{50} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="http"
+		class="com.splunk.logging.HttpEventCollectorLogbackAppender">
+		<url>https://prd-p-ie9h9.splunkcloud.com:8088</url>
+		<token>5405fa2f-3f22-4810-b140-968ca300228a</token>
+		<index>main</index>
+		<sourcetype>_json</sourcetype>
+		<disableCertificateValidation>true</disableCertificateValidation>
+		<batch_size_count>1</batch_size_count>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%msg</pattern>
+		</layout>
+	</appender>
+
+	<root level="INFO">
+		<appender-ref ref="http" />
+		<appender-ref ref="STDOUT" />
+	</root>
+</configuration>
